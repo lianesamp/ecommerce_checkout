@@ -70,3 +70,7 @@ New terms and concepts I learned while building this project.
 | **`vi.fn()` (spy)** | Creates a spy function that records every call (how many times, with what args). `expect(onClose).toHaveBeenCalledOnce()` verifies a callback was triggered. |
 | **Mock vs Stub vs Spy** | **Stub**: returns a fixed value ("if called, return 10"). **Spy**: watches calls to a function ("was it called? how many times?"). **Mock**: replaces a whole dependency with controlled behavior (can include stubs + spies). |
 | **`role="alert"`** | An ARIA role that tells screen readers "this is an important message." RTL can query it: `screen.getByRole('alert')`. We use it for coupon error messages so they're accessible AND testable. |
+| **`getByLabelText()`** | Queries an input by its `<label>` text. `screen.getByLabelText('Email')` only works if the label's `htmlFor` matches the input's `id`. Tests accessibility for free. |
+| **Testing forms with RTL** | Fill inputs with `userEvent.type()`, click submit, then `waitFor()` to check for validation errors. RHF + Zod validation is async so errors appear after a tick. |
+| **`zodResolver`** | Bridges React Hook Form with Zod. Pass your Zod schema to `useForm({ resolver: zodResolver(schema) })` and RHF validates automatically. Like Laravel's Form Request rules but client-side. |
+| **`expect.objectContaining()`** | Partial match — asserts the object has at least these keys/values, ignoring the rest. Useful when you don't want to assert every single field. |
