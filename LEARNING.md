@@ -40,3 +40,8 @@ New terms and concepts I learned while building this project.
 | **Test wrapper** | A component that wraps the thing under test with required providers (e.g. `QueryClientProvider`). Like Laravel's `setUp()` that boots the app container before each test. |
 | **`select` in `useQuery`** | TanStack Query option that transforms data after fetching but before returning to the component. We use it for client-side filtering and sorting. The raw cache stays unfiltered. |
 | **`queryKey`** | A unique identifier for a TanStack Query cache entry. When the key changes (e.g. category changes), Query refetches automatically. Like a cache key in `Cache::remember('products:electronics', ...)`. |
+| **TDD (Test-Driven Development)** | Write the test FIRST, see it fail (RED), write minimum code to pass (GREEN), then clean up (REFACTOR). Forces you to think about the interface before the implementation. |
+| **Unit test** | Tests a single function in isolation — no DOM, no React, no network. Just input → output. Runs in ~1ms. Perfect for pure business logic like pricing math. |
+| **Floating-point money** | `0.1 + 0.2 === 0.30000000000000004` in JS. For money, always round: `Math.round((n + Number.EPSILON) * 100) / 100`. Production systems use integer cents or libraries like dinero.js. |
+| **Code coverage** | Measures what % of your code is executed by tests. Types: statements, branches (if/else paths), functions, lines. 100% on `lib/pricing.ts` means every line and branch is tested. |
+| **Edge case** | An unusual or boundary input: empty array, zero, negative, very large number, exact threshold (49.99 vs 50). Edge cases are where most bugs hide — unit tests are cheap enough to cover them all. |
