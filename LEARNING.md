@@ -27,3 +27,16 @@ New terms and concepts I learned while building this project.
 | **`setupWorker` vs `setupServer`** | MSW has two modes: `setupWorker` registers a Service Worker in the real browser (for dev), `setupServer` intercepts `fetch` in Node.js (for tests). Same handlers, different runtimes. |
 | **`onUnhandledFrame`** | MSW v3 option that controls what happens when your code makes a fetch call with no matching handler. `'error'` in tests (catches forgotten mocks), `'bypass'` in dev (lets real requests through). |
 | **Dynamic import for mocking** | `await import('./mocks/browser')` loads the MSW code only when needed. In production without mocks, the code is never downloaded — keeps the bundle small. Like Laravel's lazy service providers. |
+
+## Testing
+
+| Term | Explanation |
+|------|-------------|
+| **`describe()`** | Groups related tests together. Like a test class in PHPUnit. Helps organize output and share setup logic. |
+| **`it()` / `test()`** | A single test case. Like a test method in PHPUnit (`test_it_creates_a_user()`). `it` and `test` are interchangeable in Vitest. |
+| **`expect()`** | An assertion. `expect(value).toBe(expected)` is like PHPUnit's `$this->assertEquals()`. Vitest has many matchers: `toBe`, `toEqual`, `toHaveLength`, `toBeGreaterThan`, etc. |
+| **`renderHook()`** | From React Testing Library. Renders a React hook inside a minimal component so you can test hooks in isolation without building a full UI. |
+| **`waitFor()`** | Waits for an async condition to become true. Needed for TanStack Query tests because data fetching is asynchronous — the hook returns `isLoading: true` first, then `isSuccess: true` after the fetch. |
+| **Test wrapper** | A component that wraps the thing under test with required providers (e.g. `QueryClientProvider`). Like Laravel's `setUp()` that boots the app container before each test. |
+| **`select` in `useQuery`** | TanStack Query option that transforms data after fetching but before returning to the component. We use it for client-side filtering and sorting. The raw cache stays unfiltered. |
+| **`queryKey`** | A unique identifier for a TanStack Query cache entry. When the key changes (e.g. category changes), Query refetches automatically. Like a cache key in `Cache::remember('products:electronics', ...)`. |
