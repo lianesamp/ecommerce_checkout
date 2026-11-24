@@ -67,3 +67,6 @@ New terms and concepts I learned while building this project.
 | **`userEvent`** | Simulates real user interactions (click, type, hover). Unlike `fireEvent` (one synthetic event), `userEvent` triggers the full browser sequence (focus → mousedown → mouseup → click). Always prefer `userEvent`. |
 | **Component test** | Renders a real React component into jsdom and interacts with it like a user. Slower than unit tests (~50-200ms) but catches integration bugs between component + store + DOM. |
 | **RTL philosophy** | "The more your tests resemble the way your software is used, the more confidence they can give you." Query by what users see (text, roles, labels), not by implementation details. |
+| **`vi.fn()` (spy)** | Creates a spy function that records every call (how many times, with what args). `expect(onClose).toHaveBeenCalledOnce()` verifies a callback was triggered. |
+| **Mock vs Stub vs Spy** | **Stub**: returns a fixed value ("if called, return 10"). **Spy**: watches calls to a function ("was it called? how many times?"). **Mock**: replaces a whole dependency with controlled behavior (can include stubs + spies). |
+| **`role="alert"`** | An ARIA role that tells screen readers "this is an important message." RTL can query it: `screen.getByRole('alert')`. We use it for coupon error messages so they're accessible AND testable. |
