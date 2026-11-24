@@ -118,3 +118,11 @@ New terms and concepts I learned while building this project.
 | **`actions/upload-artifact@v4`** | Saves files (coverage report, Playwright report) so you can download them from the GitHub Actions UI after the run. Like GitLab's `artifacts:`. |
 | **`--with-deps`** | Playwright flag that also installs system-level dependencies (libs Chromium needs on Linux). Required in CI where the runner is a fresh Ubuntu VM. |
 | **`if: always()`** | Runs the step even if previous steps failed. We use it for uploading test reports — you want the report especially when tests fail. |
+
+## Deployment
+
+| Term | Explanation |
+|------|-------------|
+| **Vercel** | A hosting platform optimized for frontend apps. Auto-detects Vite, builds with `npm run build`, serves from `dist/`. Free tier is generous for portfolio projects. Like Laravel Forge but for static/SPA sites. |
+| **SPA rewrite** | `vercel.json` with `"rewrites": [{"source": "/(.*)", "destination": "/index.html"}]`. Without this, navigating directly to `/checkout` returns 404 from the static server. The rewrite sends all requests to `index.html` and lets React Router handle the path. Same as Apache's `.htaccess` RewriteRule or Nginx's `try_files`. |
+| **`VITE_ENABLE_MOCKS`** | Environment variable that enables MSW in the production build. Vite replaces `import.meta.env.VITE_ENABLE_MOCKS` at build time. For this portfolio demo (no real backend), MSW runs in production too. |
