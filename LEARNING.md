@@ -89,3 +89,17 @@ New terms and concepts I learned while building this project.
 | **`useParams()`** | Reads dynamic segments from the URL. For route `/confirmation/:orderId`, `useParams()` returns `{ orderId: 'ORD-...' }`. Like Laravel's `$request->route('orderId')`. |
 | **`createMemoryRouter`** | A router that keeps history in memory (no real URL bar). Perfect for tests — set `initialEntries` to the URL you want to test. Like Laravel's `$this->get('/confirmation/ORD-123')`. |
 | **`<Link to="/">`** | Renders an `<a>` tag that navigates without a full page reload (SPA navigation). Like Vue's `<router-link>`. Always use `Link` instead of `<a href>` inside a React Router app. |
+
+## E2E Testing (Playwright)
+
+| Term | Explanation |
+|------|-------------|
+| **E2E test** | End-to-end: tests the entire app in a real browser. Slowest (~seconds) but highest confidence — catches bugs that unit and component tests can't. Use sparingly (2-5 tests max). Like Laravel Dusk. |
+| **`page.goto('/')`** | Navigates the browser to a URL. Like opening Chrome and typing the address. All Playwright interactions happen on the `page` object. |
+| **`page.getByRole()`** | Queries elements by their ARIA role (button, heading, dialog, etc.). Same philosophy as RTL — query by what the user sees, not CSS selectors. Playwright adopted this from Testing Library. |
+| **`page.getByLabel()`** | Queries form inputs by their label text. Same as RTL's `getByLabelText`. Keeps tests accessible-by-default. |
+| **`page.locator('form')`** | Creates a scoped locator. When the same label appears in multiple DOM regions (e.g. form + cart drawer), scope queries to avoid strict mode violations: `form.getByLabel('Phone')`. |
+| **Strict mode** | Playwright errors if a locator matches multiple elements (unlike RTL which uses `getAllBy`). Use `.first()`, `.nth()`, or scope with `page.locator()` to narrow down. |
+| **`webServer` config** | Playwright can auto-start your dev/preview server before tests run. We build + preview with MSW enabled, so E2E tests hit a production-like app. |
+| **`expect(locator).toBeVisible()`** | Playwright's built-in assertion that auto-waits for the element to appear. No need for manual `waitFor()` — it retries until the timeout (default 5s). |
+| **Zustand selector re-render bug** | `useStore((s) => s.someFunction)` returns the same function reference every time, so React skips re-renders. Fix: subscribe to the data directly (e.g. `s.items`) and compute in the component. Found this bug via E2E testing! |
