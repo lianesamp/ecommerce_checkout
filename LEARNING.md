@@ -45,3 +45,4 @@ New terms and concepts I learned while building this project.
 | **Floating-point money** | `0.1 + 0.2 === 0.30000000000000004` in JS. For money, always round: `Math.round((n + Number.EPSILON) * 100) / 100`. Production systems use integer cents or libraries like dinero.js. |
 | **Code coverage** | Measures what % of your code is executed by tests. Types: statements, branches (if/else paths), functions, lines. 100% on `lib/pricing.ts` means every line and branch is tested. |
 | **Edge case** | An unusual or boundary input: empty array, zero, negative, very large number, exact threshold (49.99 vs 50). Edge cases are where most bugs hide — unit tests are cheap enough to cover them all. |
+| **`toThrow()` matcher** | Tests that a function throws an error. `expect(() => fn()).toThrow('message')` — note the arrow function wrapper so the error is caught by `expect`, not thrown into the test. Like PHPUnit's `$this->expectException()`. |
