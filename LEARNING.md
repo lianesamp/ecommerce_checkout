@@ -103,3 +103,18 @@ New terms and concepts I learned while building this project.
 | **`webServer` config** | Playwright can auto-start your dev/preview server before tests run. We build + preview with MSW enabled, so E2E tests hit a production-like app. |
 | **`expect(locator).toBeVisible()`** | Playwright's built-in assertion that auto-waits for the element to appear. No need for manual `waitFor()` — it retries until the timeout (default 5s). |
 | **Zustand selector re-render bug** | `useStore((s) => s.someFunction)` returns the same function reference every time, so React skips re-renders. Fix: subscribe to the data directly (e.g. `s.items`) and compute in the component. Found this bug via E2E testing! |
+
+## CI/CD (GitHub Actions)
+
+| Term | Explanation |
+|------|-------------|
+| **GitHub Actions** | GitHub's built-in CI/CD platform. Defined in `.github/workflows/*.yml`. Equivalent to GitLab CI's `.gitlab-ci.yml`. Runs on every push/PR. |
+| **Workflow** | A YAML file that defines the CI pipeline. Triggered by events (`on: push`, `on: pull_request`). Like a GitLab CI pipeline. |
+| **Job** | An independent unit of work that runs on its own VM. Jobs run in parallel by default (unlike GitLab CI stages which are sequential). Our 3 jobs: lint, tests, E2E. |
+| **Step** | A single command within a job. Steps run sequentially. `run: npm ci` is a step. Like a `script:` line in GitLab CI. |
+| **`actions/checkout@v4`** | Official action that clones your repo into the runner. Every job needs this — the runner starts with an empty workspace. |
+| **`actions/setup-node@v4`** | Sets up Node.js with optional version and npm cache. `cache: npm` skips `npm ci` download if `package-lock.json` hasn't changed. Like GitLab's `cache:` key. |
+| **`npm ci`** | Clean install — deletes `node_modules/` and installs exactly from `package-lock.json`. Faster and more reliable than `npm install` for CI. Like `composer install --no-dev` in Laravel. |
+| **`actions/upload-artifact@v4`** | Saves files (coverage report, Playwright report) so you can download them from the GitHub Actions UI after the run. Like GitLab's `artifacts:`. |
+| **`--with-deps`** | Playwright flag that also installs system-level dependencies (libs Chromium needs on Linux). Required in CI where the runner is a fresh Ubuntu VM. |
+| **`if: always()`** | Runs the step even if previous steps failed. We use it for uploading test reports — you want the report especially when tests fail. |
