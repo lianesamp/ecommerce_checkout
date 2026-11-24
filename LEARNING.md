@@ -24,3 +24,6 @@ New terms and concepts I learned while building this project.
 | **Barrel export** | An `index.ts` file that re-exports from multiple files in a folder (e.g. `export type { Product } from './product'`). Lets you import from the folder path instead of individual files. |
 | **Zod `z.enum()`** | Creates a schema that only allows specific string values — like a TypeScript `'a' | 'b'` union but validated at runtime too. Used for shipping method IDs. |
 | **Schema-derived types** | Instead of defining a TypeScript `interface` and a Zod schema separately (which can go out of sync), define the Zod schema first and derive the type. The schema is the source of truth. |
+| **`setupWorker` vs `setupServer`** | MSW has two modes: `setupWorker` registers a Service Worker in the real browser (for dev), `setupServer` intercepts `fetch` in Node.js (for tests). Same handlers, different runtimes. |
+| **`onUnhandledFrame`** | MSW v3 option that controls what happens when your code makes a fetch call with no matching handler. `'error'` in tests (catches forgotten mocks), `'bypass'` in dev (lets real requests through). |
+| **Dynamic import for mocking** | `await import('./mocks/browser')` loads the MSW code only when needed. In production without mocks, the code is never downloaded — keeps the bundle small. Like Laravel's lazy service providers. |
