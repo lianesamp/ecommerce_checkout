@@ -46,3 +46,14 @@ New terms and concepts I learned while building this project.
 | **Code coverage** | Measures what % of your code is executed by tests. Types: statements, branches (if/else paths), functions, lines. 100% on `lib/pricing.ts` means every line and branch is tested. |
 | **Edge case** | An unusual or boundary input: empty array, zero, negative, very large number, exact threshold (49.99 vs 50). Edge cases are where most bugs hide — unit tests are cheap enough to cover them all. |
 | **`toThrow()` matcher** | Tests that a function throws an error. `expect(() => fn()).toThrow('message')` — note the arrow function wrapper so the error is caught by `expect`, not thrown into the test. Like PHPUnit's `$this->expectException()`. |
+| **Testing stores without React** | Zustand stores are plain JS — call `useStore.getState()` and `useStore.setState()` directly in tests. No need to render components or set up providers. A big advantage over Redux/Context. |
+| **Test isolation** | Reset shared state between tests (e.g. `afterEach(() => store.setState(initial))`) so one test's data doesn't leak into the next. Like Laravel's `RefreshDatabase` trait. |
+
+## State Management
+
+| Term | Explanation |
+|------|-------------|
+| **Zustand** | A minimal React state manager. Like Pinia (Vue) but simpler — state + actions defined in one function. No mutations/actions split, no modules. |
+| **`persist` middleware** | Zustand middleware that auto-serializes state to localStorage on every change and rehydrates on load. Like writing `localStorage.setItem()` on every mutation, but automatic. |
+| **`partialize`** | A `persist` option that selects which parts of state to save. We persist `items` and `coupon` but not computed functions — they can be recalculated. |
+| **`set()` / `get()`** | Zustand's core: `set()` updates state (triggers React re-renders), `get()` reads current state. `set` accepts a partial state object or an updater function `(state) => newState`. |
