@@ -57,3 +57,13 @@ New terms and concepts I learned while building this project.
 | **`persist` middleware** | Zustand middleware that auto-serializes state to localStorage on every change and rehydrates on load. Like writing `localStorage.setItem()` on every mutation, but automatic. |
 | **`partialize`** | A `persist` option that selects which parts of state to save. We persist `items` and `coupon` but not computed functions — they can be recalculated. |
 | **`set()` / `get()`** | Zustand's core: `set()` updates state (triggers React re-renders), `get()` reads current state. `set` accepts a partial state object or an updater function `(state) => newState`. |
+
+## Component Testing (RTL)
+
+| Term | Explanation |
+|------|-------------|
+| **`render()`** | From React Testing Library. Renders a React component into jsdom (fake DOM). Like Vue Test Utils' `mount()`. |
+| **`screen`** | The "rendered page" — query it like a real user: `screen.getByRole('button', { name: /add to cart/i })`. Query by role/label, NOT by CSS class or test-id. This catches accessibility bugs for free. |
+| **`userEvent`** | Simulates real user interactions (click, type, hover). Unlike `fireEvent` (one synthetic event), `userEvent` triggers the full browser sequence (focus → mousedown → mouseup → click). Always prefer `userEvent`. |
+| **Component test** | Renders a real React component into jsdom and interacts with it like a user. Slower than unit tests (~50-200ms) but catches integration bugs between component + store + DOM. |
+| **RTL philosophy** | "The more your tests resemble the way your software is used, the more confidence they can give you." Query by what users see (text, roles, labels), not by implementation details. |
