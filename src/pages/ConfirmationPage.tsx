@@ -1,12 +1,9 @@
-interface ConfirmationPageProps {
-  orderId: string
-  onBackToShopping: () => void
-}
+import { useNavigate, useParams } from 'react-router'
 
-export function ConfirmationPage({
-  orderId,
-  onBackToShopping,
-}: ConfirmationPageProps) {
+export function ConfirmationPage() {
+  const { orderId } = useParams<{ orderId: string }>()
+  const navigate = useNavigate()
+
   return (
     <main className="max-w-2xl mx-auto px-4 py-16 text-center">
       <div className="mb-6 text-green-500 text-6xl" aria-hidden="true">
@@ -34,7 +31,7 @@ export function ConfirmationPage({
 
       <button
         type="button"
-        onClick={onBackToShopping}
+        onClick={() => navigate('/')}
         className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
       >
         Back to shopping

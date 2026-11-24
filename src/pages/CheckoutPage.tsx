@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router'
 import { ContactStep } from '../components/checkout/ContactStep'
 import { ReviewStep } from '../components/checkout/ReviewStep'
 import { ShippingStep } from '../components/checkout/ShippingStep'
@@ -6,11 +7,9 @@ import { generateOrderNumber } from '../lib/orderNumber'
 import { useCartStore } from '../store/cartStore'
 import { useCheckoutStore } from '../store/checkoutStore'
 
-interface CheckoutPageProps {
-  onOrderPlaced: (orderId: string) => void
-}
+export function CheckoutPage() {
+  const navigate = useNavigate()
 
-export function CheckoutPage({ onOrderPlaced }: CheckoutPageProps) {
   const currentStep = useCheckoutStore((s) => s.currentStep)
   const contactData = useCheckoutStore((s) => s.contactData)
   const shippingMethodId = useCheckoutStore((s) => s.shippingMethodId)
@@ -28,7 +27,7 @@ export function CheckoutPage({ onOrderPlaced }: CheckoutPageProps) {
     const orderId = generateOrderNumber()
     clearCart()
     resetCheckout()
-    onOrderPlaced(orderId)
+    navigate(`/confirmation/${orderId}`)
   }
 
   return (

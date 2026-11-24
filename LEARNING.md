@@ -75,4 +75,17 @@ New terms and concepts I learned while building this project.
 | **`zodResolver`** | Bridges React Hook Form with Zod. Pass your Zod schema to `useForm({ resolver: zodResolver(schema) })` and RHF validates automatically. Like Laravel's Form Request rules but client-side. |
 | **`expect.objectContaining()`** | Partial match — asserts the object has at least these keys/values, ignoring the rest. Useful when you don't want to assert every single field. |
 | **`data-testid`** | An HTML attribute used as a last resort to target elements in tests: `screen.getByTestId('order-id')`. Prefer role/label queries first — `testid` doesn't verify accessibility. Use it for elements with no semantic role (e.g. a styled `<p>` with dynamic text). |
-| **Presentational component** | A component that receives all data via props and has no internal state or side effects. Easy to test — just pass different props. `ConfirmationPage` is one: it doesn't fetch data or manage stores. Like a Blade partial that only renders what it's given. |
+| **Presentational component** | A component that receives all data via props and has no internal state or side effects. Easy to test — just pass different props. Like a Blade partial that only renders what it's given. |
+
+## Routing
+
+| Term | Explanation |
+|------|-------------|
+| **React Router** | Client-side routing for React. Maps URL paths to components, like Laravel's `routes/web.php` or Vue Router. v7 uses `createBrowserRouter` + `RouterProvider` (the data router API). |
+| **`createBrowserRouter`** | Creates a router from a route config array. Recommended over the older `<BrowserRouter>` + `<Routes>` JSX approach. Supports loaders, actions, and nested layouts. |
+| **Layout route** | A parent route with an `<Outlet />` that wraps child routes. Children render inside the Outlet. Like Laravel's `@yield('content')` in a Blade layout, or Vue Router's nested `<router-view>`. |
+| **`<Outlet />`** | Placeholder where child routes render inside a layout route. Same concept as Vue's `<router-view />` or Laravel's `@yield('content')`. |
+| **`useNavigate()`** | React Router hook that returns a function to programmatically navigate. `navigate('/checkout')` changes the URL. Like Laravel's `redirect('/checkout')` or Vue's `router.push()`. |
+| **`useParams()`** | Reads dynamic segments from the URL. For route `/confirmation/:orderId`, `useParams()` returns `{ orderId: 'ORD-...' }`. Like Laravel's `$request->route('orderId')`. |
+| **`createMemoryRouter`** | A router that keeps history in memory (no real URL bar). Perfect for tests — set `initialEntries` to the URL you want to test. Like Laravel's `$this->get('/confirmation/ORD-123')`. |
+| **`<Link to="/">`** | Renders an `<a>` tag that navigates without a full page reload (SPA navigation). Like Vue's `<router-link>`. Always use `Link` instead of `<a href>` inside a React Router app. |

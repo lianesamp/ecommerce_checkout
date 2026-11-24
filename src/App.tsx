@@ -1,13 +1,24 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
+import { Link, Outlet, useNavigate } from 'react-router'
 import { queryClient } from './api/queryClient'
 import { CartDrawer } from './components/cart/CartDrawer'
-import { CatalogPage } from './pages/CatalogPage'
 import { useCartStore } from './store/cartStore'
 
+/**
+ * App shell — layout route that wraps all pages.
+ *
+ * Renders the header (with cart icon) and <Outlet /> where
+ * child routes (CatalogPage, CheckoutPage, ConfirmationPage)
+ * are rendered by React Router.
+ *
+ * In Vue Router terms, this is the parent component with
+ * <router-view /> inside it.
+ */
 function App() {
   const [cartOpen, setCartOpen] = useState(false)
   const itemCount = useCartStore((s) => s.itemCount)
+  const navigate = useNavigate()
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -15,7 +26,9 @@ function App() {
         {/* Header */}
         <header className="bg-white shadow-sm sticky top-0 z-30">
           <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <h1 className="text-xl font-bold text-gray-900">Checkout Store</h1>
+            <Link to="/" className="text-xl font-bold text-gray-900">
+              Checkout Store
+            </Link>
             <button
               type="button"
               onClick={() => setCartOpen(true)}
@@ -45,14 +58,15 @@ function App() {
           </div>
         </header>
 
-        <CatalogPage />
+        {/* Child route renders here */}
+        <Outlet />
 
         <CartDrawer
           isOpen={cartOpen}
           onClose={() => setCartOpen(false)}
           onCheckout={() => {
             setCartOpen(false)
-            // Will navigate to /checkout in Step 14
+            navigate('/checkout')
           }}
         />
       </div>
